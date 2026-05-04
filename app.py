@@ -52,4 +52,12 @@ def atualizar_livro(id):
         return jsonify(livro)
     return jsonify({'mensagem': 'Livro não encontrado'}), 404
 
+@app.route('/livros/<int:id>', methods=['DELETE'])
+def deletar_livro(id):
+    livro = next((livro for livro in livros if livro['id'] == id), None)
+    if livro:
+        livros.remove(livro)
+        return jsonify({'mensagem': 'Livro deletado com sucesso'})
+    return jsonify({'mensagem': 'Livro não encontrado'}), 404
+
 app.run(port=5000, host='localhost', debug=True)
