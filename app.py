@@ -30,4 +30,11 @@ livros = [
 def obter_livros():
     return jsonify(livros)
 
+@app.route('/livros/<int:id>', methods=['GET'])
+def obter_livro_por_id(id):
+    livro = next((livro for livro in livros if livro['id'] == id), None)
+    if livro:
+        return jsonify(livro)
+    return jsonify({'mensagem': 'Livro não encontrado'}), 404
+
 app.run(port=5000, host='localhost', debug=True)
