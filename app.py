@@ -37,4 +37,10 @@ def obter_livro_por_id(id):
         return jsonify(livro)
     return jsonify({'mensagem': 'Livro não encontrado'}), 404
 
+@app.route('/livros', methods=['POST'])
+def adicionar_livro():
+    novo_livro = request.get_json()
+    livros.append(novo_livro)
+    return jsonify(novo_livro), 201
+
 app.run(port=5000, host='localhost', debug=True)
