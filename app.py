@@ -43,4 +43,13 @@ def adicionar_livro():
     livros.append(novo_livro)
     return jsonify(novo_livro), 201
 
+@app.route('/livros/<int:id>', methods=['PUT'])
+def atualizar_livro(id):
+    livro = next((livro for livro in livros if livro['id'] == id), None)
+    if livro:
+        dados_atualizados = request.get_json()
+        livro.update(dados_atualizados)
+        return jsonify(livro)
+    return jsonify({'mensagem': 'Livro não encontrado'}), 404
+
 app.run(port=5000, host='localhost', debug=True)
